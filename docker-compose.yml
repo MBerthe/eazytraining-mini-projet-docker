@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web_pozos:
+    image: php:apache
+    restart: always
+    volumes:
+      - ./website:/var/www/html
+    environment:
+      - USERNAME=toto
+      - PASSWORD=python
+    depends_on:
+      - "api_pozos"
+    ports:
+      - "80:80"
+
+  api_pozos:
+    image: pozos_api
+    volumes:
+      - ${PWD}/simple_api/student_age.json:/data/student_age.json
+    ports: 
+      - "5000:5000"
+

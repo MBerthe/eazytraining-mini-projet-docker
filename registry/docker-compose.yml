@@ -1,0 +1,20 @@
+version: '2.0'
+services:
+  registry:
+    image: registry:2.7
+    ports:
+      - 5005:5000
+    volumes:
+      - ./registry-config/simple.yml:/etc/docker/registry/config.yml
+
+  ui:
+    image: joxit/docker-registry-ui:latest
+    ports:
+      - 8080:80
+    environment:
+      - REGISTRY_TITLE=Pozos Private Docker Registry
+      - REGISTRY_URL=http://registry:5000
+      - SINGLE_REGISTRY=true
+    depends_on:
+      - registry
+
